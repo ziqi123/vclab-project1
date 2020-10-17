@@ -1,0 +1,34 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+# 读取图片
+img = cv2.imread('test.png', 0)
+# source = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+# 傅里叶变换
+fft = np.fft.fft2(img)
+#print(fft)
+# 使图像对称
+fftshift = np.fft.fftshift(fft)
+# 图像频域实部
+r = np.real(fft)
+# 图像频域虚部
+i = np.imag(fft)
+# 图像幅度谱，加log便于显示。复数的绝对值
+margin = np.log(np.abs(fft))
+# 图像相位谱
+# 数字太大了，溢出，计算过程出现inf，inf再做其它运算，大部分还是inf。
+# 因此需要做一下处理，这里我们把改变了浮点数的精度为1e-5。
+phase = np.log(((np.angle(fft) * 180) / np.pi) + 1e-5)
+l = np.log(fft)
+
+images = [img, l, margin, phase]
+titles = ['源图像', '图像频谱', '图像幅度谱', '图像相位谱']
+plt.subplot(121)
+plt.imshow(images[0], 'gray')
+plt.title(titles[0])
+plt.subplot(122)
+plt.imshow(images[1], 'gray')
+plt.title(titles[1])
+plt.show()

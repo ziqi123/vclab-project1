@@ -1,0 +1,17 @@
+import cv2
+import numpy as np
+import math
+
+# 读取图片
+img = cv2.imread('test.png')
+source = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+# 二维高斯卷积核
+# 生成一维卷积核：getGaussianKernel（模板尺寸，高斯标准差）
+kx = cv2.getGaussianKernel(3, 0)
+ky = cv2.getGaussianKernel(3, 0)
+result = np.multiply(kx, np.transpose(ky))
+print(result)
+
+kz = cv2.getGaussianKernel(3, 1) - ky
+result2=cv2.GaussianBlur()

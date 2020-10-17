@@ -1,0 +1,24 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+# 读取图片
+img = cv2.imread('test.png')
+source = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+#Gaussian filter
+#(5, 5)表示高斯矩阵的长与宽都是5，标准差取0
+result = cv2.GaussianBlur(source, (11, 11), 0)
+
+# 显示图像
+titles = ['source image', 'GaussianBlur image']
+images = [source, result]
+plt.subplot(1, 2, 1)
+plt.imshow(images[0], 'gray')
+plt.title(titles[0])
+plt.subplot(1, 2, 2)
+plt.imshow(images[1], 'gray')
+plt.title(titles[1])
+plt.show()
+

@@ -1,0 +1,23 @@
+import cv2
+import numpy as np
+import matplotlib.pyplot as plt
+import math
+
+# 读取图片
+img = cv2.imread('test.png', 0)
+source = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
+
+# 做傅里叶变换
+fft = np.fft.fft2(source)
+# abs取傅里叶谱
+result = cv2.GaussianBlur(np.abs(fft), (11, 11), 0)
+
+images = [source, result]
+titles = ['source image', 'Filtered image']
+plt.subplot(121)
+plt.imshow(images[0], 'gray')
+plt.title(titles[0])
+plt.subplot(122)
+plt.imshow(images[1], 'gray')
+plt.title(titles[1])
+plt.show()
